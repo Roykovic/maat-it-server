@@ -44,7 +44,7 @@ function addClient(req, res) {
     var client = new Client(req.body);
     client
         .save()
-        .then(savedClient = > {
+        .then(savedClient => {
         res.status(201);
         res.json(savedClient);
         })
