@@ -40,13 +40,19 @@ function addHeartRate(req, res) {
     });
 }
 
-function addClient(req, res){
+function addClient(req, res) {
     var client = new Client(req.body);
     client
         .save();
-    res.json(savedAuthor);
+.
+    then(savedClient = > {
+        res.status(201);
+    res.json(savedClient);
 })
-.fail(err => handleError(req, res, 500, err));
+.
+    fail(err = > handleError(req, res, 500, err)
+)
+    ;
 }
 
 
