@@ -28,6 +28,5 @@ function handleError(req, res, statusCode, message){
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/clients', require('./routes/clients')(handleError));
