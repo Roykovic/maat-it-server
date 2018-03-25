@@ -31,7 +31,7 @@ function addHeartRate(req, res) {
             var newClient = new Client({ heartRate: 'req.body.hearRat' });
             console.log(req.body);
             client = newClient}
-            client.heartRate.push(req.body.heartRate);
+            client.heartRate = req.body.heartRate;
         client.save(function (err) {
             if (err) { handleError(req, res, 500, err); }
             else {
