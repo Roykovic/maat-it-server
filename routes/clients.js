@@ -27,7 +27,9 @@ function getHeartRate(req, res){
 
 function addHeartRate(req, res) {
     Client.findById(req.params.id, function (err, client) {
-        if (err || !client) { return handleError(req, res, 404, err); }
+        if (err || !client) {
+            var newClient = new Client({ heartRate: 'req.body.hearRat' });
+            client = newClient}
             client.heartRate.push(req.body.heartRate);
         client.save(function (err) {
             if (err) { handleError(req, res, 500, err); }
@@ -38,11 +40,22 @@ function addHeartRate(req, res) {
     });
 }
 
-router.route('/:id')
-    .post(addHeartRate);
+function addClient(req, res){
+    var client = new Client(req.body);
+    client
+        .save();
+    res.json(savedAuthor);
+})
+.fail(err => handleError(req, res, 500, err));
+}
+
 
 router.route('/:id')
+    .post(addHeartRate)
     .get(getHeartRate);
+
+router.route('/')
+    .post(addClient);
 
 module.exports = function (errCallback){
     console.log('Initializing clients routing module');
