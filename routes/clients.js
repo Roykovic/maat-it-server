@@ -29,6 +29,7 @@ function addHeartRate(req, res) {
     Client.findById(req.params.id, function (err, client) {
         if (err || !client) {
             var newClient = new Client({ heartRate: 'req.body.hearRat' });
+            console.log(req);
             client = newClient}
             client.heartRate.push(req.body.heartRate);
         client.save(function (err) {
