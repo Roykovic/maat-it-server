@@ -44,13 +44,11 @@ function addClient(req, res) {
     var client = new Client(req.body);
     client
         .save();
-.
-    then(savedClient = > {
-        res.status(201);
-    res.json(savedClient);
-})
-.
-    fail(err = > handleError(req, res, 500, err)
+        .then(savedClient = > {
+            res.status(201);
+            res.json(savedClient);
+        })
+        .fail(err = > handleError(req, res, 500, err)
 )
     ;
 }
