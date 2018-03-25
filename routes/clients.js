@@ -43,3 +43,10 @@ router.route('/:id')
 
 router.route('/:id')
     .get(getHeartRate);
+
+module.exports = function (errCallback){
+    console.log('Initializing clients routing module');
+
+    handleError = errCallback;
+    return router;
+};
