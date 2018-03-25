@@ -48,9 +48,7 @@ function addClient(req, res) {
         res.status(201);
         res.json(savedClient);
         })
-        .fail(err = > handleError(req, res, 500, err)
-)
-    ;
+        .fail(err => handleError(req, res, 500, err));
 }
 
 
