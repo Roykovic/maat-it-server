@@ -9,3 +9,5 @@ var clientSchema = new mongoose.Schema({
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
 });
+
+mongoose.model('Client', clientSchema);
