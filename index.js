@@ -1,5 +1,10 @@
 var express = require('express');
 var app = express();
+app.configure(function(){
+    app.use(express.bodyParser());
+    app.use(app.router);
+});
+
 require('./models/client');
 
 app.get('/', function(req, res){
