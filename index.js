@@ -1,9 +1,6 @@
 var express = require('express');
 var app = express();
-app.configure(function(){
-    app.use(express.bodyParser());
-    app.use(app.router);
-});
+app.use(express.bodyParser());
 
 require('./models/client');
 
