@@ -47,9 +47,7 @@ function addHeartRate(req, res) {
 function addClient(req, res) {
     var client = new Client({ heartRate: '404' });
     console.log(client)
-    client
-        .save()
-        .then(return res.json(client));
+    return res.json(client)
 }
 
 
