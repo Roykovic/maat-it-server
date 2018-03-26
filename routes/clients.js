@@ -25,7 +25,7 @@ function getHeartRate(req, res){
 }
 
 function addHeartRate(req, res) {
-    console.log('post')
+    console.log(req.params.id);
     Client.findById(req.params.id, function (err, client) {
         if (err || !client) {
             console.log('Client not found, creating new one')
