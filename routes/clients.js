@@ -27,13 +27,16 @@ function getHeartRate(req, res){
 function addHeartRate(req, res) {
     Client.findById(req.params.id, function (err, client) {
         if (err || !client) {
+            console.log('Client not found, creating new one')
             var newClient = new Client({ heartRate: 'req.body.heartRate' });
+            console.log('client created')
             console.log(req.body);
             client = newClient}
             client.heartRate = req.body.heartRate;
         client.save(function (err) {
-            if (err) { handleError(req, res, 500, err); }
+            if (err) { handleError(req, res, 500, err); console.log('error when saving')}
             else {
+                console.log('returning')
                 return res.json(client);
             }
         });
