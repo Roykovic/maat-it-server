@@ -8,16 +8,7 @@ Client = mongoose.model('Client');
 
 function getHeartRate(req, res){
     var result = Client.find({ id: req.params.id });
-    console.log(result)
-    result
-        .then(data => {
-            console.log("THEN")
-        if(req.params.id){
-        data = data[0];
-    }
-    return res.json(data);
-});
-
+    return res.json(result[0]);
 }
 
 function addHeartRate(req, res) {
