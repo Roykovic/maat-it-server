@@ -11,9 +11,9 @@ function getHeartRate(req, res){
     if(req.params.id){
         query._id = req.params.id;
     }
-
+    console.log(query)
     var result = Client.find(query);
-
+    console.log(result)
     result
         .then(data => {
         if(req.params.id){
