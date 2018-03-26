@@ -7,7 +7,10 @@ var mongoose = require('mongoose');
 Client = mongoose.model('Client');
 
 function getHeartRate(req, res){
-    var result = Client.find({ id: req.params.id }).exec(return res.json(result[0]));
+    var callback = function() {
+        return res.json(result[0])
+    };
+    var result = Client.find({ id: req.params.id }).exec(callback);
 }
 
 function addHeartRate(req, res) {
