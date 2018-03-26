@@ -20,8 +20,7 @@ function getHeartRate(req, res){
         data = data[0];
     }
     return res.json(data);
-})
-.fail(err => handleError(req, res, 500, err));
+});
 
 }
 
