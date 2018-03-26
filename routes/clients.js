@@ -7,10 +7,8 @@ var mongoose = require('mongoose');
 Client = mongoose.model('Client');
 
 function getHeartRate(req, res){
-    console.log(req.params)
-    console.log("***********BODY************")
-    console.log(req.body.id)
     var result = Client.find({ id: req.params.id });
+    console.log(result)
     result
         .then(data => {
             console.log("THEN")
