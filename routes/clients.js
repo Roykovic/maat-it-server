@@ -49,10 +49,7 @@ function addClient(req, res) {
     console.log(client)
     client
         .save()
-        .then(savedClient => {
-        res.status(201);
-        res.json(savedClient);
-        });
+        .then(return res.json(client));
 }
 
 
