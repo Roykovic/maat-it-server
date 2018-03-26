@@ -28,7 +28,7 @@ function getHeartRate(req, res){
 function addHeartRate(req, res) {
     Client.findById(req.params.id, function (err, client) {
         if (err || !client) {
-            var newClient = new Client({ heartRate: 'req.body.hearRat' });
+            var newClient = new Client({ heartRate: 'req.body.heartRate' });
             console.log(req.body);
             client = newClient}
             client.heartRate = req.body.heartRate;
