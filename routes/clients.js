@@ -28,7 +28,7 @@ function addHeartRate(req, res) {
             if (err) { handleError(req, res, 500, err); console.log('error when saving')}
             else {
                 var returnObj = {
-                    msg:  "Heartrate has succesfully been added to user.",
+                    msg:  "Heartrate saved succesfully.",
                     id:    client.id,
                     heartRate:  client.heartRate
                 };
