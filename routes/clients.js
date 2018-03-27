@@ -43,7 +43,7 @@ function addHeartRate(req, res) {
 
 function addClient(req, res) {
     var client = new Client({ heartRate: '404' });
-    client.save(function (err, fluffy) {
+    client.save(function (err, client) {
         if (err) handleError(req, res, 500, err);
         return res.json(client)
     });
