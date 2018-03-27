@@ -7,15 +7,18 @@ var mongoose = require('mongoose');
 Client = mongoose.model('Client');
 
 function getHeartRate(req, res){
-    console.log("get")
-    console.log(req.params.id);
-    Client.find({ id: req.params.id }, function(err, client) {
-        console.log('found');
-        console.log(err)
-        console.log(client)
-        if (err) handleError(req, res, 500, err);
-        return res.json(client)
+    Client.count({}, function( err, count){
+        console.log( "Number of clients:", count );
     })
+    // console.log("get")
+    // console.log(req.params.id);
+    // Client.find({ id: req.params.id }, function(err, client) {
+    //     console.log('found');
+    //     console.log(err)
+    //     console.log(client)
+    //     if (err) handleError(req, res, 500, err);
+    //     return res.json(client)
+    // })
 }
 
 function addHeartRate(req, res) {
