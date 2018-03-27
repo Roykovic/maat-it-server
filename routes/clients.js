@@ -8,18 +8,10 @@ mongoose.connect('mongodb://admin:admin@ds121309.mlab.com:21309/maat-it');
 Client = mongoose.model('Client');
 
 function getHeartRate(req, res){
-    Client.count({}, function( err, count){
-        console.log( "Number of clients:", count );
+    Client.find({ id: req.params.id }, function(err, client) {
+        if (err) handleError(req, res, 500, err);
+        return res.json(client)
     })
-    // console.log("get")
-    // console.log(req.params.id);
-    // Client.find({ id: req.params.id }, function(err, client) {
-    //     console.log('found');
-    //     console.log(err)
-    //     console.log(client)
-    //     if (err) handleError(req, res, 500, err);
-    //     return res.json(client)
-    // })
 }
 
 function addHeartRate(req, res) {
