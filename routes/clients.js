@@ -47,7 +47,6 @@ function addClient(req, res) {
     console.log('before: ');
     console.log(client)
     client.save(function (err, client) {
-        console.log(saved)
         if (err) handleError(req, res, 500, err);
         return res.json(client)
     });
