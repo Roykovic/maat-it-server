@@ -4,6 +4,8 @@ var router = express();
 var handleError;
 
 var mongoose = require('mongoose');
+mongoose.connect('mongodb://admin:admin@ds121309.mlab.com:21309/maat-it');
+mongoose.Promise = require('q').Promise;
 Client = mongoose.model('Client');
 
 function getHeartRate(req, res){
