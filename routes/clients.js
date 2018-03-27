@@ -27,8 +27,12 @@ function addHeartRate(req, res) {
         client.save(function (err) {
             if (err) { handleError(req, res, 500, err); console.log('error when saving')}
             else {
-                console.log('returning')
-                return res.json(client);
+                var returnObj = {
+                    msg:  "Heartrate has succesfully been added to user.",
+                    id:    client.id,
+                    heartRate:  client.heartRate
+                };
+                return res.json(returnObj);
             }
         });
     });
