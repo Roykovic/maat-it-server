@@ -8,7 +8,7 @@ mongoose.connect('mongodb://admin:admin@ds121309.mlab.com:21309/maat-it');
 Client = mongoose.model('Client');
 
 function getHeartRate(req, res){
-    Client.find({ id: req.params.id }, function(err, client) {
+    Client.findById(req.params.id, function (err, client) {
         if (err) handleError(req, res, 500, err);
         return res.json(client)
     })
