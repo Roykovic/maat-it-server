@@ -10,7 +10,7 @@ Picto = mongoose.model('Picto');
 
 function addPicto(req, res) {
     var picto = new Picto({ name: 'req.body.name',
-                            timer: 'req.body.timer',
+                            timer: req.body.timer,
                             startTime: 'req.body.startTime',
                             image: 'req.body.image'
                           });
