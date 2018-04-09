@@ -14,6 +14,17 @@ function getHeartRate(req, res){
     })
 }
 
+function findall(req, res){
+  Client.find()
+    .then(clients => {
+      res.send(clients);
+    }).catch(err => {
+     res.status(500).send({
+         message: err.message || "Some error occurred while retrieving clients."
+     });
+ });
+}
+
 function addHeartRate(req, res) {
     console.log(req.params.id);
     Client.findById(req.params.id, function (err, client) {
@@ -55,6 +66,7 @@ router.route('/:id')
 
 router.route('/')
     .post(addClient);
+    .get(findAll);
 
 module.exports = function (errCallback){
     console.log('Initializing clients routing module');
