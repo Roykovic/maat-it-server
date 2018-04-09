@@ -14,7 +14,7 @@ function getHeartRate(req, res){
     })
 }
 
-function findall(req, res){
+function findAll(req, res){
   Client.find()
     .then(clients => {
       res.send(clients);
@@ -65,7 +65,7 @@ router.route('/:id')
     .get(getHeartRate);
 
 router.route('/')
-    .post(addClient);
+    .post(addClient)
     .get(findAll);
 
 module.exports = function (errCallback){
