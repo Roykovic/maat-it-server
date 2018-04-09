@@ -10,8 +10,8 @@ Picto = mongoose.model('Picto');
 
 function addPicto(req, res) {
     var picto = new Picto({ name: 'req.body.name',
-                            timer: req.body.timer,
-                            startTime: now(),
+                            timer: 'req.body.timer',
+                            startTime: 'req.body.startTime',
                             image: 'req.body.image'
                           });
 
@@ -30,11 +30,40 @@ function getPicto(req, res){
 }
 
 
+function deletePicto(req, res){
+    Picto.findByIdAndRemove(req.params.pictoId)
+    .then(picto => {
+        if(!picto) {
+            return res.status(404).send({
+                message: "Picto not found with id " + req.params.pictoId
+            });
+        }
+        res.send({message: "Picto deleted successfully!"});
+    }).catch(err => {
+        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.status(404).send({
+                message: "Picto not found with id " + req.params.pictoId
+            });
+        }
+        return res.status(500).send({
+            message: "Could not delete Picto with id " + req.params.pictoId
+        });
+    });
+};
+
+
+
 router.route('/:id')
     .get(getPicto);
 
+
 router.route('/add')
     .post(addPicto);
+
+
+router.route('/delete')
+    .post(deletePicto);
+
 
 module.exports = function (errCallback){
     console.log('Initializing Picto routing module');
