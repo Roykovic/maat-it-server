@@ -7,7 +7,7 @@ console.log('Iniializing Picto schema');
 var pictoSchema = new mongoose.Schema({
     name: { type: String, required: true },
     timer: { type: Number, required: true },
-    startTime: { type: Date, required: true },
+    startTime: { type: Date, required: false },
     image: { type: String, required: true }
 
 }, {

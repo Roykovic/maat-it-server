@@ -6,7 +6,7 @@ require('./models/client');
 require('./models/picto');
 
 app.get('/', function(req, res){
-    res.send("You just performed a get on the maat-it server");
+    res.send("You just performed a get on the maat-it server V0.1.3");
 });
 
 app.post('/', function(req, res){
