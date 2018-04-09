@@ -51,15 +51,27 @@ function deletePicto(req, res){
     });
 };
 
+function findAll(req, res){
+  Picto.find()
+    .then(pictos => {
+      res.send(pictos);
+    }).catch(err => {
+     res.status(500).send({
+         message: err.message || "Some error occurred while retrieving pictos."
+     });
+ });
+}
 
+
+
+router.route('/')
+    .get(findAll);
 
 router.route('/:id')
     .get(getPicto);
 
-
 router.route('/add')
     .post(addPicto);
-
 
 router.route('/delete')
     .post(deletePicto);
