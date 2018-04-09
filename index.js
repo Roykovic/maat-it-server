@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 
 require('./models/client');
-require('./models/pictos');
+require('./models/picto');
 
 app.get('/', function(req, res){
     res.send("You just performed a get on the maat-it server");
