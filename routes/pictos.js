@@ -9,10 +9,10 @@ Picto = mongoose.model('Picto');
 
 
 function addPicto(req, res) {
-    var picto = new Picto({ name: '', // TODO hier moeten we nog een input voor hebben
-                            timer: null,
+    var picto = new Picto({ name: 'req.body.name',
+                            timer: req.body.timer,
                             startTime: now(),
-                            image: ''
+                            image: 'req.body.image'
                           });
 
     picto.save(function (err, picto) {
