@@ -3,6 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 
 require('./models/client');
+require('./models/picto');
+
 
 app.listen(process.env.PORT || 3000);
 
@@ -22,3 +24,4 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/clients', require('./routes/clients')(handleError));
+app.use('/pictos', require('./routes/pictos')(handleError));
