@@ -10,11 +10,33 @@ Attendant = mongoose.model('Attendant');
 function addAttendant(req, res) {
     var user = req.body.userName;
     var pass = req.body.pass;
-    var attendant = new Attendant({ userName: user , password: pass});
+    var attendant = new Attendant({ username: user , password: pass});
     attendant.save(function (err, client) {
         if (err) handleError(req, res, 500, err);
         return res.json(client)
     });
+}
+
+function editAttendant(req, res){
+    Attendant.findById(req.params.id, function (err, attendant) {
+        if (err || !attendant) { handleError(req, res, 404, err);}
+        if(req.body.username){attendant.username = req.params.username}
+        if(req.body.password){attendant.password = req.params.password}
+        attendant.save(function (err) {
+            if (err) { handleError(req, res, 500, err); console.log('error when saving')}
+            else {
+                var returnObj = {
+                    msg:  "Attendant edited succesfully.",
+                    id:    attendant.id,
+                    Username:  attendant.username,
+                    Password: attendant.password
+                };
+                return res.json(returnObj);
+            }
+        });
+    }):
+
+    }
 }
 
 function findAll(req, res){
@@ -31,3 +53,6 @@ function findAll(req, res){
 router.route('/')
     .post(addAttendant)
     .get(findAll);
+
+router.route('/:id')
+    .post(editAttendant);
