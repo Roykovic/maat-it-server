@@ -2,9 +2,10 @@ var express = require('express');
 var _ = require('underscore');
 var router = express();
 var handleError;
+var config = require('./config');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://admin:admin@ds121309.mlab.com:21309/maat-it');
+mongoose.connect(config.mongooseUrl);
 Attendant = mongoose.model('Attendant');
 
 function addAttendant(req, res) {
