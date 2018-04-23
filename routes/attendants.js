@@ -57,19 +57,33 @@ function find(req, res){
                 return res.json(attendant);
             }
         });
-};
+}
+
+function authenticate(req, res){
+  Attendant.findOne( { $and: [ { username: req.body.username }, { password: req.body.password } ] }, function(err, attendant) {
+      if (err || !attendant) { handleError(req, res, 404, err); console.log('error when saving')}
+      else{
+          return res.json(attendant._id)
+      }
+  });
+}
+
 
 router.route('/')
     .post(addAttendant)
     .get(findAll);
 
+router.route('/auth')
+    .post(authenticate);
+
 router.route('/:id')
     .post(editAttendant)
     .get(find);
+
 
 module.exports = function (errCallback){
     console.log('Initializing attendants routing module');
 
     handleError = errCallback;
     return router;
-};
+}
