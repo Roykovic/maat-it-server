@@ -5,7 +5,8 @@ var handleError;
 var config = require('../config');
 
 var mongoose = require('mongoose');
-mongoose.connect(config.mongooseUrl);
+//mongoose.connect(config.mongooseUrl);
+mongoose.connect('mongodb://admin:admin@ds121309.mlab.com:21309/maat-it');
 Attendant = mongoose.model('Attendant');
 
 function addAttendant(req, res) {
