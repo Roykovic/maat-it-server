@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 
 require('./models/client');
 require('./models/picto');
+require('./models/attendant');
 
 app.listen(process.env.PORT || 3000);
 
