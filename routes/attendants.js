@@ -50,12 +50,22 @@ function findAll(req, res){
 });
 }
 
+function find(req, res){
+    Attendant.findById(req.params.id, function (err, attendant) {
+        if (err) { handleError(req, res, 404, err); console.log('error when saving')}
+            else {
+                return res.json(attendant);
+            }
+        });
+};
+
 router.route('/')
     .post(addAttendant)
     .get(findAll);
 
 router.route('/:id')
-    .post(editAttendant);
+    .post(editAttendant)
+    .get(find);
 
 module.exports = function (errCallback){
     console.log('Initializing attendants routing module');
