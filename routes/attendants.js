@@ -36,9 +36,7 @@ function editAttendant(req, res){
                 return res.json(returnObj);
             }
         });
-    }):
-
-    }
+    });
 }
 
 function findAll(req, res){
@@ -58,3 +56,10 @@ router.route('/')
 
 router.route('/:id')
     .post(editAttendant);
+
+module.exports = function (errCallback){
+    console.log('Initializing attendants routing module');
+
+    handleError = errCallback;
+    return router;
+};
