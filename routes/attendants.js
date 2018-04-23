@@ -2,15 +2,15 @@ var express = require('express');
 var _ = require('underscore');
 var router = express();
 var handleError;
-var config = require('./config');
+var config = require('../config');
 
 var mongoose = require('mongoose');
 mongoose.connect(config.mongooseUrl);
 Attendant = mongoose.model('Attendant');
 
 function addAttendant(req, res) {
-    var user = req.body.userName;
-    var pass = req.body.pass;
+    var user = req.body.username;
+    var pass = req.body.password;
     var attendant = new Attendant({ username: user , password: pass});
     attendant.save(function (err, client) {
         if (err) handleError(req, res, 500, err);
@@ -21,8 +21,8 @@ function addAttendant(req, res) {
 function editAttendant(req, res){
     Attendant.findById(req.params.id, function (err, attendant) {
         if (err || !attendant) { handleError(req, res, 404, err);}
-        if(req.body.username){attendant.username = req.params.username}
-        if(req.body.password){attendant.password = req.params.password}
+        if(req.body.username){attendant.username = req.body.username}
+        if(req.body.password){attendant.password = req.body.password}
         attendant.save(function (err) {
             if (err) { handleError(req, res, 500, err); console.log('error when saving')}
             else {
