@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 
 require('./models/client');
 require('./models/picto');
-
+require('./models/attendant');
 
 app.listen(process.env.PORT || 3000);
 
@@ -19,9 +19,9 @@ function handleError(req, res, statusCode, message){
     res.status(statusCode);
     res.json(message);
 };
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/clients', require('./routes/clients')(handleError));
+app.use('/attendants', require('./routes/attendants')(handleError));
 app.use('/pictos', require('./routes/pictos')(handleError));
