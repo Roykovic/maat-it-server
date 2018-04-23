@@ -61,6 +61,33 @@ function addClient(req, res) {
     });
 }
 
+function assign(req, res){
+    var clientID = req.body.clientId;
+    var attendantID = req.body.attendantId;
+
+    Client.findById(clientID, function (err, client) {
+        if (err || !client) { handleError(req, res, 404,err)}
+        else{
+                client.attendantId = attendantID;
+                client.save(function (err) {
+                    if (err) { handleError(req, res, 500, err); console.log('error when saving')}
+                    else {
+                        var returnObj = {
+                            msg:  "Client assigned succesfully",
+                            id:    client.id,
+                            AttendantID:  client.attendantId
+                        };
+                        res.json(returnObj);
+                    }
+                });
+            };
+        })
+}
+
+
+router.route('/assign')
+    .post(assign);
+
 
 router.route('/:id')
     .post(addHeartRate)
