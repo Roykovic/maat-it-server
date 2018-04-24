@@ -17,7 +17,10 @@ function getHeartRate(req, res){
 }
 
 function findAll(req, res){
-  Client.find()
+    var query = {};
+    if(req.query.attendantId) query.attendantId = req.query.attendantId;
+
+  Client.find(query)
     .then(clients => {
       res.send(clients);
     }).catch(err => {
