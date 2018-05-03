@@ -55,9 +55,9 @@ function addHeartRate(req, res) {
 }
 
 function addClient(req, res) {
-    var client = new Client({ heartRate: '404' });
-    console.log('before: ');
-    console.log(client)
+    var name = req.body.name;
+    var heartRate = req.body.heartRate;
+    var client = new Client({ name: name , heartRate: heartRate});
     client.save(function (err, client) {
         if (err) handleError(req, res, 500, err);
         return res.json(client)
@@ -78,6 +78,7 @@ function assign(req, res){
                         var returnObj = {
                             msg:  "Client assigned succesfully",
                             id:    client.id,
+                            ClientName: client.name,
                             AttendantID:  client.attendantId
                         };
                         res.json(returnObj);
