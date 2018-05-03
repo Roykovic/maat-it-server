@@ -56,7 +56,7 @@ function deleteTask(req, res){
 function findAll(req, res){
   Task.find()
     .then(tasks => {
-      res.send(task);
+      res.send(tasks);
     }).catch(err => {
      res.status(500).send({
          message: err.message || "Some error occurred while retrieving tasks."
