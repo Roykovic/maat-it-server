@@ -7,59 +7,59 @@ var config = require('../config');
 var mongoose = require('mongoose');
 //mongoose.connect(config.mongooseUrl);
 mongoose.connect('mongodb://admin:admin@ds121309.mlab.com:21309/maat-it');
-Picto = mongoose.model('Picto');
+Task = mongoose.model('Task');
 
 
-function addPicto(req, res) {
-    var picto = new Picto({ name: req.body.name,
+function addTask(req, res) {
+    var task = new Task({ name: req.body.name,
                             timer: req.body.timer,
                             startTime: req.body.startTime,
                             image: req.body.image
                           });
 
-    picto.save(function (err, picto) {
+    task.save(function (err, task) {
         if (err) handleError(req, res, 500, err);
-        return res.json(picto)
+        return res.json(task)
     });
 }
 
 
-function getPicto(req, res){
-    Picto.findById(req.params.id, function (err, picto) {
+function getTask(req, res){
+    Task.findById(req.params.id, function (err, task) {
         if (err) handleError(req, res, 500, err);
-        return res.json(picto)
+        return res.json(task)
     })
 }
 
 
-function deletePicto(req, res){
-    Picto.findByIdAndRemove(req.params.pictoId)
-    .then(picto => {
-        if(!picto) {
+function deleteTask(req, res){
+    Task.findByIdAndRemove(req.params.id)
+    .then(task => {
+        if(!task) {
             return res.status(404).send({
-                message: "Picto not found with id " + req.params.pictoId
+                message: "Task not found with id " + req.params.id
             });
         }
-        res.send({message: "Picto deleted successfully!"});
+        res.send({message: "Task deleted successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
-                message: "Picto not found with id " + req.params.pictoId
+                message: "Task not found with id " + req.params.id
             });
         }
         return res.status(500).send({
-            message: "Could not delete Picto with id " + req.params.pictoId
+            message: "Could not delete Task with id " + req.params.id
         });
     });
 };
 
 function findAll(req, res){
-  Picto.find()
-    .then(pictos => {
-      res.send(pictos);
+  Task.find()
+    .then(tasks => {
+      res.send(task);
     }).catch(err => {
      res.status(500).send({
-         message: err.message || "Some error occurred while retrieving pictos."
+         message: err.message || "Some error occurred while retrieving tasks."
      });
  });
 }
@@ -70,17 +70,17 @@ router.route('/')
     .get(findAll);
 
 router.route('/:id')
-    .get(getPicto);
+    .get(getTask);
 
 router.route('/add')
-    .post(addPicto);
+    .post(addTask);
 
 router.route('/delete')
-    .post(deletePicto);
+    .post(deleteTask);
 
 
 module.exports = function (errCallback){
-    console.log('Initializing Picto routing module');
+    console.log('Initializing Task routing module');
 
     handleError = errCallback;
     return router;
