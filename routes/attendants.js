@@ -12,7 +12,8 @@ Attendant = mongoose.model('Attendant');
 function addAttendant(req, res) {
     var user = req.body.username;
     var pass = req.body.password;
-    var attendant = new Attendant({ username: user , password: pass});
+    var isAdmin = req.body.isAdmin;
+    var attendant = new Attendant({ username: user , password: pass, isAdmin: isAdmin});
     attendant.save(function (err, client) {
         if (err) handleError(req, res, 500, err);
         return res.json(client)
@@ -24,6 +25,7 @@ function editAttendant(req, res){
         if (err || !attendant) { handleError(req, res, 404, err);}
         if(req.body.username){attendant.username = req.body.username}
         if(req.body.password){attendant.password = req.body.password}
+        if(req.body.isAdmin){attendant.isAdmin = req.body.isAdmin}
         attendant.save(function (err) {
             if (err) { handleError(req, res, 500, err); console.log('error when saving')}
             else {
@@ -31,7 +33,8 @@ function editAttendant(req, res){
                     msg:  "Attendant edited succesfully.",
                     id:    attendant.id,
                     Username:  attendant.username,
-                    Password: attendant.password
+                    Password: attendant.password,
+                    IsAdmin: attendant.isAdmin
                 };
                 return res.json(returnObj);
             }
