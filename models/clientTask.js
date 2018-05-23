@@ -12,4 +12,4 @@ var clientTaskSchema = new mongoose.Schema({
     toObject: { virtuals: true }
 });
 
-mongoose.model('clientTask', clientTaskSchema);
+mongoose.model('ClientTask', clientTaskSchema);
