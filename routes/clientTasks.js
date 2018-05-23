@@ -17,24 +17,24 @@ function addClientTask(req, res) {
     Task.findById(req.params.taskId, function (err, task) {
         if (err) handleError(req, res, 500, err);
         var reqTask = task;
-    })
-    if(req.body.startTime && req.body.startTime > reqTask.minTime){
-        timer = req.body.startTime;
-    }
-    else{
-        timer = reqTask.minTime;
-    }
-    var clientTask = new clientTask({
-        clientId: req.body.clientId,
-        taskId: req.body.taskId,
-        startTime: req.body.startTime,
-        timer: timer
-    });
+        if(req.body.startTime && req.body.startTime > reqTask.minTime){
+            timer = req.body.startTime;
+        }
+        else{
+            timer = reqTask.minTime;
+        }
+        var clientTask = new clientTask({
+            clientId: req.body.clientId,
+            taskId: req.body.taskId,
+            startTime: req.body.startTime,
+            timer: timer
+        });
 
-    clientTask.save(function (err, clientTask) {
-        if (err) handleError(req, res, 500, err);
-        return res.json(clientTask)
-    });
+        clientTask.save(function (err, clientTask) {
+            if (err) handleError(req, res, 500, err);
+            return res.json(clientTask)
+        });
+    })
 }
 
 function deleteClientTask(req, res){
