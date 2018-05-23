@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 require('./models/client');
 require('./models/task');
 require('./models/attendant');
+require('./models/clientTask');
 
 app.listen(process.env.PORT || 3000);
 
@@ -25,3 +26,4 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/clients', require('./routes/clients')(handleError));
 app.use('/attendants', require('./routes/attendants')(handleError));
 app.use('/tasks', require('./routes/tasks')(handleError));
+app.use('/client-tasks', require('./routes/clientTasks')(handleError));
