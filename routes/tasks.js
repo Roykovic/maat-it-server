@@ -12,7 +12,7 @@ Task = mongoose.model('Task');
 
 function addTask(req, res) {
     var task = new Task({ name: req.body.name,
-                            timer: req.body.timer,
+                            minTime: req.body.minTime,
                             image: req.body.image
                           });
 
