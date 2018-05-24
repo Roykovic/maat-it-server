@@ -7,23 +7,21 @@ var config = require('../config');
 var mongoose = require('mongoose');
 //mongoose.connect(config.mongooseUrl);
 mongoose.connect('mongodb://admin:admin@ds121309.mlab.com:21309/maat-it');
-clientTask = mongoose.model('ClientTask');
+ClientTask = mongoose.model('ClientTask');
 Task = mongoose.model('Task');
 
 
 function addClientTask(req, res) {
-    var reqTask;
     var timer;
-    Task.findById(req.params.taskId, function (err, task) {
+    Task.findById(req.body.taskId, function (err, task){
         if (err) handleError(req, res, 500, err);
-        var reqTask = task;
-        if(req.body.startTime && req.body.startTime > reqTask.minTime){
-            timer = req.body.startTime;
+        if(req.body.timer && req.body.timer > task.minTime){
+            timer = req.body.timer;
         }
         else{
-            timer = reqTask.minTime;
+            timer = task.minTime;
         }
-        var clientTask = new clientTask({
+        var clientTask = new ClientTask({
             clientId: req.body.clientId,
             taskId: req.body.taskId,
             startTime: req.body.startTime,
@@ -38,7 +36,7 @@ function addClientTask(req, res) {
 }
 
 function deleteClientTask(req, res){
-    clientTask.findByIdAndRemove(req.params.id)
+    ClientTask.findByIdAndRemove(req.params.id)
         .then(clientTask => {
         if(!clientTask) {
         return res.status(404).send({
@@ -62,7 +60,7 @@ function find(req, res){
     var query = {};
     if(req.query.clientId) query.clientId = req.query.clientId;
 
-    clientTask.find()
+    ClientTask.find()
         .then(clientTasks => {
         res.send(clientTasks);
 }).catch(err => {
