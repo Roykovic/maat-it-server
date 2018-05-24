@@ -4,8 +4,7 @@ console.log('Initializing Task schema');
 
 var taskSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    timer: { type: Number, required: true },
-    startTime: { type: Date, required: false },
+    minTime: { type: Number, required: true },
     image: { type: String, required: true }
 
 }, {
