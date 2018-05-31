@@ -71,11 +71,11 @@ router.route('/')
 router.route('/:id')
     .get(getTask);
 
-router.route('/add')
+router.route('/')
     .post(addTask);
 
-router.route('/delete')
-    .post(deleteTask);
+router.route('/:id')
+    .delete(deleteTask);
 
 
 module.exports = function (errCallback){

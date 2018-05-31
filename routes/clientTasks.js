@@ -75,11 +75,11 @@ function find(req, res){
 router.route('/')
     .get(find);
 
-router.route('/add')
+router.route('/')
     .post(addClientTask);
 
-router.route('/delete')
-    .post(deleteClientTask);
+router.route('/:id')
+    .delete(deleteClientTask);
 
 
 module.exports = function (errCallback){
