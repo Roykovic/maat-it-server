@@ -9,7 +9,6 @@ require('./models/clientTask');
 
 app.listen(process.env.PORT || 3000);
 
-
 function handleError(req, res, statusCode, message){
     console.log();
     console.log('-------- Error handled --------');
@@ -20,8 +19,13 @@ function handleError(req, res, statusCode, message){
     res.status(statusCode);
     res.json(message);
 };
+
+process.env.secretKey = "superrandom";
+
+app.set('superSecret', process.env.secretKey);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 
 app.use('/clients', require('./routes/clients')(handleError));
 app.use('/attendants', require('./routes/attendants')(handleError));

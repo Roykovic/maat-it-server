@@ -3,6 +3,8 @@ var _ = require('underscore');
 var router = express();
 var handleError;
 var config = require('../config');
+var index = require('../index');
+var jwt    = require('jsonwebtoken');
 
 var mongoose = require('mongoose');
 //mongoose.connect(config.mongooseUrl);
@@ -66,7 +68,19 @@ function authenticate(req, res){
   Attendant.findOne( { $and: [ { username: req.body.username }, { password: req.body.password } ] }, function(err, attendant) {
       if (err || !attendant) { handleError(req, res, 404, err); console.log('error when saving')}
       else{
-          return res.json(attendant._id)
+          const payload = {
+              admin: attendant.admin
+          };
+          var token = jwt.sign(payload, process.env.secretKey, {
+              expiresIn : 60*60*24 // expires in 24 hours
+          });
+
+          // return the information including token as JSON
+          res.json({
+              success: true,
+              user_id: attendant._id,
+              token: token
+          });
       }
   });
 }
