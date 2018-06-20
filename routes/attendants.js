@@ -127,8 +127,6 @@ router.use(function(req, res, next) {
     }
 });
 
-
-
 router.route('/')
     .get(findAll);
 
