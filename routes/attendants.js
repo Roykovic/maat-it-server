@@ -16,6 +16,7 @@ function addAttendant(req, res) {
     var pass = req.body.password;
     var isAdmin = req.body.isAdmin;
     var attendant = new Attendant({ username: user , password: pass, isAdmin: isAdmin});
+    console.log(user);
     attendant.save(function (err, client) {
         if (err) handleError(req, res, 500, err);
         return res.json(client)
@@ -64,25 +65,37 @@ function find(req, res){
         });
 }
 
-function authenticate(req, res){
-  Attendant.findOne( { $and: [ { username: req.body.username }, { password: req.body.password } ] }, function(err, attendant) {
-      if (err || !attendant) { handleError(req, res, 404, err); console.log('error when saving')}
-      else{
-          const payload = {
-              admin: attendant.admin
-          };
-          var token = jwt.sign(payload, process.env.secretKey, {
-              expiresIn : 60*60*24 // expires in 24 hours
-          });
+function authenticate(req, res) {
+    Attendant.findOne({username: req.body.username}, function (err, attendant) {
+        if (err || !attendant) {
+            handleError(req, res, 404, err);
+            console.log('error when saving')
+        }
+        else {
+            // test a matching password
+            attendant.comparePassword(req.body.password, function (err, isMatch) {
+                if (err) throw err;
+                if (isMatch) {
+                    const payload = {
+                        admin: attendant.admin
+                    };
+                    var token = jwt.sign(payload, process.env.secretKey, {
+                        expiresIn: 60 * 60 * 24 // expires in 24 hours
+                    });
 
-          // return the information including token as JSON
-          res.json({
-              success: true,
-              user_id: attendant._id,
-              token: token
-          });
-      }
-  });
+                    // return the information including token as JSON
+                    res.json({
+                        success: true,
+                        user_id: attendant._id,
+                        token: token
+                    });
+                } else {
+                    handleError(req, res, 401, err);
+                    console.log('Wrong password')
+                }
+            });
+        }
+    });
 }
 
 router.route('/')
