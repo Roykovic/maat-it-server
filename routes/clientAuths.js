@@ -18,6 +18,15 @@ function createClientAuth(req, res) {
     });
 }
 
+function find(req, res){
+    ClientAuth.findById(req.params.id, function (err, clientAuth) {
+        if (err) { handleError(req, res, 404, err); console.log('error with searching')}
+        else {
+            return res.json(clientAuth.clientId);
+        }
+    });
+}
+
 router.route('/')
     .post(createClientAuth);
 
