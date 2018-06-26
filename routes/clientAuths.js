@@ -48,11 +48,27 @@ function addClientId(req, res){
 }
 
 function find(req, res){
-    ClientAuth.findById(req.params.id, function (err, clientAuth) {
-        if (err) { handleError(req, res, 404, err); console.log('error with searching')}
-        else {
-            return res.json(clientAuth.clientId);
-        }
+    clientId = null;
+    ClientAuth.find({}, function(err, ca){
+        var length = ca.length;
+        ca.forEach(
+            function(clientAuth){
+                clientAuth.comparePassword(req.params.id, function (err, isMatch) {
+                    if(isMatch){
+                        clientId = clientAuth.clientId;
+                    }
+                    if(clientAuth == ca[length-1]) {
+                        if (clientId) {
+                            return res.json(clientId);
+                        }
+                        else {
+                            handleError(req, res, 404, err);
+                            console.log('Auth code not found')
+                        }
+                    }
+                });
+            }
+        );
     });
 }
 
