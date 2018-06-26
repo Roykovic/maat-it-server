@@ -3,6 +3,7 @@ var _ = require('underscore');
 var router = express();
 var handleError;
 var config = require('../config');
+var jwt    = require('jsonwebtoken');
 
 var mongoose = require('mongoose');
 //mongoose.connect(config.mongooseUrl);
@@ -88,6 +89,76 @@ function assign(req, res){
         })
 }
 
+function authenticate(req, res) {
+    Client.findById(req.body.id, function (err, client) {
+        if (err || !client) {
+            handleError(req, res, 404, err);
+            console.log('error when saving')
+        }
+        else {
+            // test a matching password
+            client.comparePassword(req.body.password, function (err, isMatch) {
+                if (err) throw err;
+                if (isMatch) {
+                    const payload = {
+                        admin: client.name
+                    };
+                    var token = jwt.sign(payload, process.env.secretKey, {
+                        expiresIn: 60 * 60 * 24 // expires in 24 hours
+                    });
+
+                    // return the information including token as JSON
+                    res.json({
+                        success: true,
+                        user_id: client._id,
+                        token: token
+                    });
+                } else {
+                    handleError(req, res, 401, err);
+                    console.log('Wrong password')
+                }
+            });
+        }
+    });
+}
+
+router.route('/auth')
+    .post(authenticate);
+
+router.use(function(req, res, next) {
+
+    // check header or url parameters or post parameters for token
+    var token = req.body.token || req.query.token || req.headers['authorization'];
+
+    if(token != null && token.indexOf("Bearer") > -1) {
+        token = token.split(" ")[1]
+    }
+
+    // decode token
+    if (token) {
+
+        // verifies secret and checks exp
+        jwt.verify(token, process.env.secretKey, function(err, decoded) {
+            if (err) {
+                return res.json({ success: false, message: 'Failed to authenticate token.' });
+            } else {
+                // if everything is good, save to request for use in other routes
+                req.decoded = decoded;
+                next();
+            }
+        });
+
+    } else {
+
+        // if there is no token
+        // return an error
+        return res.status(403).send({
+            success: false,
+            message: 'No token provided.'
+        });
+
+    }
+});
 
 router.route('/assign')
     .post(assign);

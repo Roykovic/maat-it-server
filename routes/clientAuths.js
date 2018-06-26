@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 //mongoose.connect(config.mongooseUrl);
 mongoose.connect('mongodb://admin:admin@ds121309.mlab.com:21309/maat-it');
 ClientAuth = mongoose.model('ClientAuth');
+Client = mongoose.model('Client');
 
 function createClientAuth(req, res) {
     var qr = req.body.qr;
@@ -56,6 +57,12 @@ function find(req, res){
                 clientAuth.comparePassword(req.params.id, function (err, isMatch) {
                     if(isMatch){
                         clientId = clientAuth.clientId;
+                        Client.findById(clientId, function (err, client) {
+                            client.password = req.params.id;
+                            client.save(function (err, client) {
+                                if (err) handleError(req, res, 500, err);
+                            });
+                        });
                     }
                     if(clientAuth == ca[length-1]) {
                         if (clientId) {
