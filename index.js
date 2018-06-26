@@ -7,6 +7,7 @@ require('./models/client');
 require('./models/task');
 require('./models/attendant');
 require('./models/clientTask');
+require('./models/clientAuth');
 
 app.listen(process.env.PORT || 3000);
 
@@ -28,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/attendants', require('./routes/attendants')(handleError));
-
+app.use('/client-auths', require('./routes/clientAuths')(handleError));
 app.use(function(req, res, next) {
 
     // check header or url parameters or post parameters for token
