@@ -74,9 +74,9 @@ function assign(req, res){
                 client.attendantId = attendantID;
                 client.save(function (err) {
                     if (err) { handleError(req, res, 500, err); console.log('error when saving')}
-                    else {
-                        var returnObj = {
-                            msg:  "Client assigned succesfully",
+                    else{
+                    var returnObj = {
+                        msg:  "Client assigned succesfully",
                             id:    client.id,
                             ClientName: client.name,
                             AttendantID:  client.attendantId
@@ -84,14 +84,13 @@ function assign(req, res){
                         res.json(returnObj);
                     }
                 });
-            };
+            }
         })
 }
 
 
 router.route('/assign')
     .post(assign);
-
 
 router.route('/:id')
     .post(addHeartRate)
