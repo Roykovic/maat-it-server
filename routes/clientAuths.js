@@ -58,10 +58,12 @@ function find(req, res){
                     if(isMatch){
                         clientId = clientAuth.clientId;
                         Client.findById(clientId, function (err, client) {
-                            client.password = req.params.id;
-                            client.save(function (err, client) {
-                                if (err) handleError(req, res, 500, err);
-                            });
+                            if (client) {
+                                client.password = req.params.id;
+                                client.save(function (err, client) {
+                                    if (err) handleError(req, res, 500, err);
+                                });
+                            }
                         });
                     }
                     if(clientAuth == ca[length-1]) {
