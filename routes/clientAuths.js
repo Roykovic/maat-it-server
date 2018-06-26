@@ -18,6 +18,35 @@ function createClientAuth(req, res) {
     });
 }
 
+function addClientId(req, res){
+    var isSet = false;
+    ClientAuth.find({}, function(err, ca){
+        var length = ca.length;
+        ca.forEach(
+            function(clientAuth){
+                clientAuth.comparePassword(req.params.id, function (err, isMatch) {
+                    if(isMatch){
+                        isSet = true;
+                        clientAuth.clientId = req.body.clientId;
+                        clientAuth.save(function (err) {
+                            if (err) { handleError(req, res, 500, err); console.log('error when saving')}
+                        });
+                    }
+                    if(clientAuth == ca[length-1]) {
+                        if (isSet) {
+                            return res.json(isSet);
+                        }
+                        else {
+                            handleError(req, res, 404, err);
+                            console.log('Auth code not found')
+                        }
+                    }
+                });
+            }
+        );
+    });
+}
+
 function find(req, res){
     ClientAuth.findById(req.params.id, function (err, clientAuth) {
         if (err) { handleError(req, res, 404, err); console.log('error with searching')}
