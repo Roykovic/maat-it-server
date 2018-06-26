@@ -30,6 +30,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/attendants', require('./routes/attendants')(handleError));
 app.use('/client-auths', require('./routes/clientAuths')(handleError));
+app.use('/clients', require('./routes/clients')(handleError));
+
 app.use(function(req, res, next) {
 
     // check header or url parameters or post parameters for token
@@ -65,7 +67,5 @@ app.use(function(req, res, next) {
     }
 });
 
-
-app.use('/clients', require('./routes/clients')(handleError));
 app.use('/tasks', require('./routes/tasks')(handleError));
 app.use('/client-tasks', require('./routes/clientTasks')(handleError));
