@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 
-console.log('Iniializing client schema');
+console.log('Initializing client schema');
 
 var clientSchema = new mongoose.Schema({
     name: {type: String, required: true},

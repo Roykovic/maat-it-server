@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 
-console.log('Iniializing attendant schema');
+console.log('Initializing attendant schema');
 
 var attendantSchema = new mongoose.Schema({
     username: { type: String, required: true },

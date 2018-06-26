@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 
-console.log('Iniializing clientAuth schema');
+console.log('Initializing clientAuth schema');
 
 var clientAuthSchema = new mongoose.Schema({
     clientId: {type: mongoose.Schema.Types.ObjectId, ref: 'Client'},
