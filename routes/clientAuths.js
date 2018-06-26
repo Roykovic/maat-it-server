@@ -81,7 +81,19 @@ function find(req, res){
     });
 }
 
+function getAll(req, res){
+    ClientAuth.find()
+        .then(clientAuths => {
+        res.send(clientAuths);
+}).catch(err => {
+        res.status(500).send({
+        message: err.message || "Some error occurred while retrieving clients."
+    });
+});
+}
+
 router.route('/')
+    .get(getAll)
     .post(createClientAuth);
 
 router.route('/:id')
