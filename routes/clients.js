@@ -12,7 +12,7 @@ Client = mongoose.model('Client');
 
 function getHeartRate(req, res){
     Client.findById(req.params.id, function (err, client) {
-        if (err || !client) handleError(req, res, 500, err);
+        if (err || !client) return handleError(req, res, 500, err);
         return res.json(client.heartRate)
     })
 }
@@ -42,7 +42,7 @@ function addHeartRate(req, res) {
             client = newClient}
             client.heartRate = req.body.heartRate;
         client.save(function (err) {
-            if (err) { handleError(req, res, 500, err); console.log('error when saving')}
+            if (err) { return handleError(req, res, 500, err); console.log('error when saving')}
             else {
                 var returnObj = {
                     msg:  "Heart rate saved successfully.",
@@ -60,7 +60,7 @@ function addClient(req, res) {
     var heartRate = req.body.heartRate;
     var client = new Client({ name: name , heartRate: heartRate});
     client.save(function (err, client) {
-        if (err) handleError(req, res, 500, err);
+        if (err) return handleError(req, res, 500, err);
         return res.json(client)
     });
 }
@@ -70,11 +70,11 @@ function assign(req, res){
     var attendantID = req.body.attendantId;
 
     Client.findById(clientID, function (err, client) {
-        if (err || !client) { handleError(req, res, 404,err)}
+        if (err || !client) { return handleError(req, res, 404,err)}
         else{
                 client.attendantId = attendantID;
                 client.save(function (err) {
-                    if (err) { handleError(req, res, 500, err); console.log('error when saving')}
+                    if (err) { return handleError(req, res, 500, err); console.log('error when saving')}
                     else{
                     var returnObj = {
                         msg:  "Client assigned succesfully",
@@ -92,7 +92,7 @@ function assign(req, res){
 function authenticate(req, res) {
     Client.findById(req.body.id, function (err, client) {
         if (err || !client) {
-            handleError(req, res, 404, err);
+           return handleError(req, res, 404, err);
             console.log('error when saving')
         }
         else {
@@ -114,7 +114,7 @@ function authenticate(req, res) {
                         token: token
                     });
                 } else {
-                    handleError(req, res, 401, err);
+                   return handleError(req, res, 401, err);
                     console.log('Wrong password')
                 }
             });

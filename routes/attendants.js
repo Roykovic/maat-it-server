@@ -18,19 +18,19 @@ function addAttendant(req, res) {
     var attendant = new Attendant({ username: user , password: pass, isAdmin: isAdmin});
     console.log(user);
     attendant.save(function (err, client) {
-        if (err) handleError(req, res, 500, err);
+        if (err) return handleError(req, res, 500, err);
         return res.json(client)
     });
 }
 
 function editAttendant(req, res){
     Attendant.findById(req.params.id, function (err, attendant) {
-        if (err || !attendant) { handleError(req, res, 404, err);}
+        if (err || !attendant) { return handleError(req, res, 404, err);}
         if(req.body.username){attendant.username = req.body.username}
         if(req.body.password){attendant.password = req.body.password}
         if(req.body.isAdmin){attendant.isAdmin = req.body.isAdmin}
         attendant.save(function (err) {
-            if (err) { handleError(req, res, 500, err); console.log('error when saving')}
+            if (err) { return handleError(req, res, 500, err); console.log('error when saving')}
             else {
                 var returnObj = {
                     msg:  "Attendant edited succesfully.",
@@ -58,7 +58,7 @@ function findAll(req, res){
 
 function find(req, res){
     Attendant.findById(req.params.id, function (err, attendant) {
-        if (err) { handleError(req, res, 404, err); console.log('error when saving')}
+        if (err) { return handleError(req, res, 404, err); console.log('error when saving')}
             else {
                 return res.json(attendant);
             }
@@ -68,7 +68,7 @@ function find(req, res){
 function authenticate(req, res) {
     Attendant.findOne({username: req.body.username}, function (err, attendant) {
         if (err || !attendant) {
-            handleError(req, res, 404, err);
+           return handleError(req, res, 404, err);
             console.log('error when saving')
         }
         else {
@@ -90,7 +90,7 @@ function authenticate(req, res) {
                         token: token
                     });
                 } else {
-                    handleError(req, res, 401, err);
+                   return handleError(req, res, 401, err);
                     console.log('Wrong password')
                 }
             });

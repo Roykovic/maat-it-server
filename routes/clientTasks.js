@@ -14,7 +14,7 @@ Task = mongoose.model('Task');
 function addClientTask(req, res) {
     var timer;
     Task.findById(req.body.taskId, function (err, task){
-        if (err) handleError(req, res, 500, err);
+        if (err) return handleError(req, res, 500, err);
         if(req.body.timer && req.body.timer > task.minTime){
             timer = req.body.timer;
         }
@@ -29,7 +29,7 @@ function addClientTask(req, res) {
         });
 
         clientTask.save(function (err, clientTask) {
-            if (err) handleError(req, res, 500, err);
+            if (err) return handleError(req, res, 500, err);
             return res.json(clientTask)
         });
     })

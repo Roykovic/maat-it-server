@@ -17,7 +17,7 @@ function addTask(req, res) {
                           });
 
     task.save(function (err, task) {
-        if (err) handleError(req, res, 500, err);
+        if (err) return handleError(req, res, 500, err);
         return res.json(task)
     });
 }
@@ -25,7 +25,7 @@ function addTask(req, res) {
 
 function getTask(req, res){
     Task.findById(req.params.id, function (err, task) {
-        if (err) handleError(req, res, 500, err);
+        if (err) return handleError(req, res, 500, err);
         return res.json(task)
     })
 }

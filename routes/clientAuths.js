@@ -14,7 +14,7 @@ function createClientAuth(req, res) {
     var qr = req.body.qr;
     var clientAuth = new ClientAuth({ clientId: null , password: qr});
     clientAuth.save(function (err, client) {
-        if (err) handleError(req, res, 500, err);
+        if (err) return handleError(req, res, 500, err);
         return res.json(client)
     });
 }
@@ -30,7 +30,7 @@ function addClientId(req, res){
                         isSet = true;
                         clientAuth.clientId = req.body.clientId;
                         clientAuth.save(function (err) {
-                            if (err) { handleError(req, res, 500, err); console.log('error when saving')}
+                            if (err) { return handleError(req, res, 500, err); console.log('error when saving')}
                         });
                     }
                     if(clientAuth == ca[length-1]) {
@@ -38,7 +38,7 @@ function addClientId(req, res){
                             return res.json(isSet);
                         }
                         else {
-                            handleError(req, res, 404, err);
+                           return handleError(req, res, 404, err);
                             console.log('Auth code not found')
                         }
                     }
@@ -61,7 +61,7 @@ function find(req, res){
                             if (client) {
                                 client.password = req.params.id;
                                 client.save(function (err, client) {
-                                    if (err) handleError(req, res, 500, err);
+                                    if (err) return handleError(req, res, 500, err);
                                 });
                             }
                         });
@@ -71,7 +71,7 @@ function find(req, res){
                             return res.json(clientId);
                         }
                         else {
-                            handleError(req, res, 404, err);
+                           return handleError(req, res, 404, err);
                             console.log('Auth code not found')
                         }
                     }
