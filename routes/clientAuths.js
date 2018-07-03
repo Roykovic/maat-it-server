@@ -97,8 +97,8 @@ router.route('/')
     .post(createClientAuth);
 
 router.route('/:id')
-    .post(addClientId)
-    .get(find);
+    .get(find)
+    .post(addClientId);
 
 
 module.exports = function (errCallback){
