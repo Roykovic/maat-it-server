@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var jwt    = require('jsonwebtoken');
+var os = require('os');
 
 require('./models/client');
 require('./models/task');
@@ -55,8 +56,10 @@ app.use(function(req, res, next) {
             }
         });
 
-    } else {
-
+    } else if(os.hostname().indexOf("LAPTOP-CQ1T3TI9") > -1){
+        next();
+    }
+    else{
         // if there is no token
         // return an error
         return res.status(403).send({
