@@ -98,7 +98,7 @@ describe('/GET clientAuths', () => {
 });
 
 describe('/POST clientAuths', () => {
-    it('the clientId of the clientauth with provided id should change to the clientId in the body',(done) =>
+    it('Should return true for valid clientId and id',(done) =>
 {
     let clientAuth = {
         clientId: "5af19a3c4abefe0004b9c410"
